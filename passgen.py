@@ -1,3 +1,15 @@
+#/////////////////////////////////////////////////////////////////////////#
+#                      Password generator script                          #
+#                                                                         #
+#         Publish date  18-AUG-2022                                       #
+#         Version  1.0.0                                                  #
+#         By  Seyed Jafar Yaghoubi                                        #
+#         License  MIT                                                    #
+#         More info https://github.com/J-Yaghoubi/                        #
+#         Contact  algo3xp3rt@gmail.com                                   #
+#                                                                         #
+#/////////////////////////////////////////////////////////////////////////#
+
 
 from itertools import product
 import argparse, logging, random, string, time
@@ -17,7 +29,7 @@ class PassGenerator:
         self.count = count
         self.path = path
         self.mode = mode
-        self.start = time.perf_counter_ns()
+        self.start = time.perf_counter()
 
         self._logging_init()
         self._debug_log(msg = 'Script has been initialized and is ready to do his job')
@@ -50,9 +62,9 @@ class PassGenerator:
             if situation == 'start':
                 msg = f'{self.mode} mode=> length:{self.length}, seq:{self.seq}, prefix:{self.prefix or "None"}, path:{self.path}'
             else:
-                msg = f'Job has been done in: {time.perf_counter_ns() - self.start} nano-secund'
+                msg = f'Job has been done in: {round((time.perf_counter() - self.start), 3)} Seconds'
         
-        print(msg)
+        print(u"\u001b[38;5;150m" + msg)
         logging.debug(msg)
 
     def all_mode(self):
@@ -104,7 +116,7 @@ if __name__ == '__main__':
     parser.add_argument("-p", "--prefix", default='', help = "the prefix for using in the password")   
     parser.add_argument("-o", "--output", default='passwords.txt', help="path to save the pass-list")
 
-    group = parser.add_mutually_exclusive_group(required=True)
+    group = parser.add_mutually_exclusive_group()
     group.add_argument("-a", "--all", action="store_true", help="generate all possible definition")
     group.add_argument("-r", "--random", type=int, default=5, help="generate limited random combination")
 
